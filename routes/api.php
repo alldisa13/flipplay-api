@@ -1,0 +1,16 @@
+<?php
+
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+// Laravel menyingkat "media" menjadi "medium" untuk nama parameter route.
+// ->parameters() memastikan parameternya tetap {media}, sesuai type-hint Media $media.
+Route::apiResource('media', MediaController::class)->parameters(['media' => 'media']);
+
+Route::apiResource('users', UserController::class)->only(['index', 'store', 'show']);
+
+// Custom action (ubah relasi)
+Route::get('/users/{user}/collection', [UserController::class, 'collection']);
+Route::post('/users/{user}/collection', [UserController::class, 'addToCollection']);
+Route::delete('/users/{user}/collection/{media}', [UserController::class, 'removeFromCollection']);
