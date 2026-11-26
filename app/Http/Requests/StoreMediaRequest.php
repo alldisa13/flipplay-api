@@ -18,15 +18,16 @@ class StoreMediaRequest extends FormRequest
         $req = $isPost ? 'required' : 'sometimes';
 
         return [
-            'type'   => [$req, 'in:anime,film'],
-            'title'  => [
+            'type'         => [$req, 'in:anime,film'],
+            'title'        => [
                 $req,
                 'string',
                 'max:255',
                 Rule::unique('media', 'title')->ignore($this->route('media')),
             ],
-            'year'   => [$req, 'integer', 'min:1888', 'max:2100'],
-            'rating' => [$req, 'numeric', 'between:0,10'],
+            'year'         => [$req, 'integer', 'min:1888', 'max:2100'],
+            'rating'       => [$req, 'numeric', 'between:0,10'],
+            'is_available' => ['sometimes', 'boolean'],
 
             'episodes' => [$isPost ? 'required_if:type,anime' : 'sometimes', 'nullable', 'integer', 'min:1'],
             'studio'   => [$isPost ? 'required_if:type,anime' : 'sometimes', 'nullable', 'string', 'max:255'],

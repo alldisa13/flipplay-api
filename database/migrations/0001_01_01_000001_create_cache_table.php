@@ -6,32 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
-{
-    Schema::create('media', function (Blueprint $table) {
-        $table->id();
-        $table->enum('type', ['anime', 'film']);
-        $table->string('title')->unique();
-        $table->unsignedSmallInteger('year');
-        $table->float('rating');
-        $table->boolean('is_available')->default(true);
+    {
+        Schema::create('cache', function (Blueprint $table) {
+            $table->string('key')->primary();
+            $table->mediumText('value');
+            $table->bigInteger('expiration')->index();
+        });
 
-        // khusus Anime
-        $table->unsignedInteger('episodes')->nullable();
-        $table->string('studio')->nullable();
-        // khusus Film
-        $table->unsignedInteger('duration')->nullable();
-        $table->string('director')->nullable();
+        Schema::create('cache_locks', function (Blueprint $table) {
+            $table->string('key')->primary();
+            $table->string('owner');
+            $table->bigInteger('expiration')->index();
+        });
+    }
 
-        $table->timestamps();
-    });
-}
-
-public function down(): void
-{
-    Schema::dropIfExists('media');
-}
+    public function down(): void
+    {
+        Schema::dropIfExists('cache');
+        Schema::dropIfExists('cache_locks');
+    }
 };

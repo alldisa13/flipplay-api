@@ -25,7 +25,8 @@ class MediaController extends Controller
 
     public function store(StoreMediaRequest $request)
     {
-        $media = Media::create($request->validated());
+        //$media = Media::create($request->validated());
+        $media = Media::create($request->validated())->refresh();
         return (new MediaResource($media))->response()->setStatusCode(201);
     }
 

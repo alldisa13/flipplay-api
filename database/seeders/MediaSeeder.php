@@ -17,7 +17,7 @@ class MediaSeeder extends Seeder
         Media::create(['type' => 'anime', 'title' => 'Naruto', 'year' => 2002, 'rating' => 8.0, 'episodes' => 220, 'studio' => 'Pierrot']);
         Media::create(['type' => 'film', 'title' => 'Kimi no Na wa', 'year' => 2016, 'rating' => 8.9, 'duration' => 107, 'director' => 'Makoto Shinkai']);
         Media::create(['type' => 'film', 'title' => 'Spirited Away', 'year' => 2001, 'rating' => 8.8, 'duration' => 125, 'director' => 'Hayao Miyazaki']);
-
+        Media::create(['type' => 'anime', 'title' => 'Violet Evergarden', 'year' => 2018, 'rating' => 8.5, 'episodes' => 13, 'studio' => 'Kyoto Animation', 'is_available' => false]);
         User::create(['name' => 'Andi']);
         User::create(['name' => 'Budi']);
     }
