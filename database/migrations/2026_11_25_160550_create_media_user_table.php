@@ -6,23 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
-{
-    Schema::create('media_user', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('media_id')->constrained('media')->cascadeOnDelete();
-        $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-        $table->timestamps();
+    {
+        Schema::create('media', function (Blueprint $table) {
+            $table->id();
+            $table->enum('type', ['anime', 'film']);
+            $table->string('title')->unique();
+            $table->unsignedSmallInteger('year');
+            $table->float('rating');
+            $table->boolean('is_available')->default(true);
 
-        $table->unique(['media_id', 'user_id']); // cegah duplikat di level database
-    });
-}
+            // khusus Anime
+            $table->unsignedInteger('episodes')->nullable();
+            $table->string('studio')->nullable();
+            // khusus Film
+            $table->unsignedInteger('duration')->nullable();
+            $table->string('director')->nullable();
 
-public function down(): void
-{
-    Schema::dropIfExists('media_user');
-}
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('media');
+    }
 };
